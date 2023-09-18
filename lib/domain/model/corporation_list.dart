@@ -12,7 +12,7 @@ class CorporationList with _$CorporationList {
     required String name,
     required String exchange,
     required String assetType,
-    required String ipoDate,
+    required DateTime ipoDate,
     required String status,
   }) = _CorporationList;
 
