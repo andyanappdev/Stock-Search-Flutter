@@ -8,7 +8,7 @@ extension ToCorporationList on CorporationListEntity {
       name: name,
       exchange: exchange,
       assetType: assetType,
-      ipoDate: DateTime.parse('ipoDate'),
+      ipoDate: DateTime.parse(ipoDate),
       status: status,
     );
   }
