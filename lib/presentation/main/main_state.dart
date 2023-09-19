@@ -2,19 +2,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:us_stock/domain/model/corporation_list.dart';
 
-part 'main_screen_state.freezed.dart';
+part 'main_state.freezed.dart';
 
-part 'main_screen_state.g.dart';
+part 'main_state.g.dart';
 
 @freezed
-class MainScreenState with _$MainScreenState {
-  const factory MainScreenState({
+class MainState with _$MainState {
+  const factory MainState({
     @Default([]) List<CorporationList> corporationList,
     @Default(false) bool isLoading,
     @Default(false) bool isRefreshing,
     @Default('') String searchQuery,
-  }) = _MainScreenState;
+  }) = _MainState;
 
-  factory MainScreenState.fromJson(Map<String, Object?> json) =>
-      _$MainScreenStateFromJson(json);
+  factory MainState.fromJson(Map<String, Object?> json) =>
+      _$MainStateFromJson(json);
 }
