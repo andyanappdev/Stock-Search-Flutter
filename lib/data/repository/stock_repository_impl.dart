@@ -1,4 +1,3 @@
-import 'package:us_stock/core/result.dart';
 import 'package:us_stock/data/csv/corporation_list_parser.dart';
 import 'package:us_stock/data/data_source/local/corporation_list_entity.dart';
 import 'package:us_stock/data/data_source/local/stock_dao.dart';
@@ -16,7 +15,7 @@ class StockRepositoryImpl implements StockRepository {
   StockRepositoryImpl(this._api, this._dao, this._corporationListParser);
 
   @override
-  Future<Result<List<CorporationList>>> fetchCorporationList(
+  Future<List<CorporationList>> fetchCorporationList(
       bool fetchFromRemote, String query) async {
     // 1. cache에서 데이터 찾기
     final List<CorporationListEntity> localList =
@@ -27,8 +26,7 @@ class StockRepositoryImpl implements StockRepository {
     final shouldLoadFromCache = !isDbEmpty && !fetchFromRemote;
     // cache에서 가져오기
     if (shouldLoadFromCache) {
-      return Result.success(
-          localList.map((e) => e.toCorporationList()).toList());
+      return localList.map((e) => e.toCorporationList()).toList();
     }
     // remote에서 가져오기
     try {
@@ -39,14 +37,15 @@ class StockRepositoryImpl implements StockRepository {
       // 새로 remote 에서 받아온 data cache에 추가
       await _dao.insertCorporationList(
           remoteList.map((e) => e.toCorporationListEntity()).toList());
-      return Result.success(remoteList);
-    } catch (message) {
-      return Result.error('message');
+      return remoteList;
+    } catch (e) {
+      throw Exception(
+          'Error StockRepositoryImpl fetchCorporationList: ${e.toString()}');
     }
   }
 
   @override
-  Future<Result<CorporationInfo>> fetchCorporationInfo(String symbol) async {
+  Future<CorporationInfo> fetchCorporationInfo(String symbol) async {
     // TODO: implement fetchCorporationInfo
     throw UnimplementedError();
   }
