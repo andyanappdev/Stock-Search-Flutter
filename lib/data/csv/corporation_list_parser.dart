@@ -2,7 +2,7 @@ import 'package:csv/csv.dart';
 import 'package:us_stock/data/csv/csv_parser_interface.dart';
 import 'package:us_stock/domain/model/corporation_list.dart';
 
-class CorporationListParser implements CsvParser {
+class CorporationListParser implements CsvParser<CorporationList> {
   @override
   Future<List<CorporationList>> parse(String csvString) async {
     // CSV to list
@@ -32,6 +32,7 @@ class CorporationListParser implements CsvParser {
             e.name.isNotEmpty &&
             e.exchange.isNotEmpty &&
             e.assetType.isNotEmpty &&
+            e.ipoDate.toString().isNotEmpty &&
             e.status.isNotEmpty)
         .toList();
   }
