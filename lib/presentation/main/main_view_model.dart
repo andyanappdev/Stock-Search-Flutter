@@ -29,7 +29,7 @@ class MainViewModel with ChangeNotifier {
       case Success(:final data):
         _state = state.copyWith(corporationList: data);
       case Error(:final message):
-        log('Error MainScreenViewModel fetchCorporationList: $message');
+        log('Error MainViewModel: $message');
     }
 
     // 3. isLoading state 변경
