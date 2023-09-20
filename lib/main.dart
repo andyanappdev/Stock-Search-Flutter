@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'US Stock',
       theme: ThemeData(
+        fontFamily: 'HelevticalNenu',
         colorScheme: lightColorScheme,
         useMaterial3: true,
       ),
