@@ -14,6 +14,7 @@ class CorporationList with _$CorporationList {
     required String assetType,
     required DateTime ipoDate,
     required String status,
+    @Default(false) bool favorite,
   }) = _CorporationList;
 
   factory CorporationList.fromJson(Map<String, Object?> json) =>
