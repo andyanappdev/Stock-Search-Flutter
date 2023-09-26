@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:us_stock/data/data_source/local/company_entity.dart';
 import 'package:us_stock/domain/model/company.dart';
 
 part 'favorite_company_list_entity.g.dart';
@@ -8,7 +9,7 @@ part 'favorite_company_list_entity.g.dart';
 @HiveType(typeId: 1)
 class FavoriteCompanyListEntity {
   @HiveField(0, defaultValue: [])
-  List<Company> favoriteCompanyList;
+  List<CompanyEntity> favoriteCompanyList;
 
   FavoriteCompanyListEntity({List<Company>? favoriteCompanyList})
       : favoriteCompanyList = [];
