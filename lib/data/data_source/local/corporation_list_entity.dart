@@ -17,7 +17,7 @@ class CorporationListEntity extends HiveObject {
   String ipoDate;
   @HiveField(5)
   String status;
-  @HiveField(6)
+  @HiveField(6, defaultValue: false)
   bool favorite;
 
   CorporationListEntity({
