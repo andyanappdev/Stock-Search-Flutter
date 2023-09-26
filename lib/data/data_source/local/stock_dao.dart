@@ -22,6 +22,7 @@ class StockDao {
     final List<CompanyEntity> companyList = box.values.toList();
     final updateObject = companyList[index];
     updateObject.favorite = !updateObject.favorite;
+    updateObject.save();
   }
 
   /// Hive 내의 data Search
