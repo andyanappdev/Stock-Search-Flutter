@@ -4,5 +4,7 @@ import 'package:us_stock/domain/model/company.dart';
 abstract interface class StockRepository {
   Future<List<Company>> fetchCompanyList(bool fetchFromRemote, String query);
 
+  Future<List<Company>> fetchFavoriteCompanyList();
+
   Future<CompanyInfo> fetchCompanyInfo(String symbol);
 }
