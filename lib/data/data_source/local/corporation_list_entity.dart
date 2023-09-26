@@ -17,6 +17,8 @@ class CorporationListEntity extends HiveObject {
   String ipoDate;
   @HiveField(5)
   String status;
+  @HiveField(6)
+  bool favorite;
 
   CorporationListEntity({
     required this.symbol,
@@ -25,5 +27,6 @@ class CorporationListEntity extends HiveObject {
     required this.assetType,
     required this.ipoDate,
     required this.status,
+    this.favorite = false,
   });
 }
