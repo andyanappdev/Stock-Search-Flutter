@@ -10,6 +10,7 @@ extension ToCorporationList on CorporationListEntity {
       assetType: assetType,
       ipoDate: DateTime.parse(ipoDate),
       status: status,
+      favorite: favorite,
     );
   }
 }
@@ -23,6 +24,7 @@ extension ToCorporationListEntity on CorporationList {
       assetType: assetType,
       ipoDate: ipoDate.toString(),
       status: status,
+      favorite: favorite,
     );
   }
 }
