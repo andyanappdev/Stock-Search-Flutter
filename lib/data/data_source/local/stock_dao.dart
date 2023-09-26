@@ -17,6 +17,14 @@ class StockDao {
     await box.clear();
   }
 
+  /// Hive 내의 favorite property update
+  Future<void> updateCorporationListEntity(int index) async {
+    final box = await Hive.openBox<CorporationListEntity>('stock.db');
+    final List<CorporationListEntity> corporationList = box.values.toList();
+    final updateObject = corporationList[index];
+    updateObject.favorite = !updateObject.favorite;
+  }
+
   /// Hive 내의 data Search
   Future<List<CorporationListEntity>> searchCorporation(String query) async {
     final box = await Hive.openBox<CorporationListEntity>('stock.db');
