@@ -16,7 +16,7 @@ final router = GoRouter(
       path: '/main',
       builder: (context, state) {
         return ChangeNotifierProvider(
-          create: (_) => MainViewModel(FetchCorporationListUseCase(
+          create: (_) => MainViewModel(FetchCompanyListUseCase(
               StockRepositoryImpl(StockApi(), StockDao()))),
           child: const MainScreen(),
         );

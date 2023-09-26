@@ -1,9 +1,8 @@
-import 'package:us_stock/domain/model/corporation_info.dart';
-import 'package:us_stock/domain/model/corporation_list.dart';
+import 'package:us_stock/domain/model/company_info.dart';
+import 'package:us_stock/domain/model/company.dart';
 
 abstract interface class StockRepository {
-  Future<List<CorporationList>> fetchCorporationList(
-      bool fetchFromRemote, String query);
+  Future<List<Company>> fetchCompanyList(bool fetchFromRemote, String query);
 
-  Future<CorporationInfo> fetchCorporationInfo(String symbol);
+  Future<CompanyInfo> fetchCompanyInfo(String symbol);
 }

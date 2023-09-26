@@ -127,13 +127,13 @@ class _MainScreenState extends State<MainScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: ListView.builder(
-            itemCount: state.corporationList.length,
+            itemCount: state.companyList.length,
             itemBuilder: (context, index) {
               return Column(
                 children: [
                   ListTile(
                     leading: Text(
-                      state.corporationList[index].symbol,
+                      state.companyList[index].symbol,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onBackground,
                         fontSize: 13,
@@ -141,7 +141,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     title: Text(
-                      state.corporationList[index].name,
+                      state.companyList[index].name,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.outline,

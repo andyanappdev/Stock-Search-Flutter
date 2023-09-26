@@ -10,7 +10,7 @@ void main() {
     final response = await StockApi().fetchStocksList();
 
     // parser test
-    final parser = CorporationListParser();
+    final parser = CompanyListParser();
     final remoteList = await parser.parse(response.body);
 
     expect(remoteList[0].symbol, 'A');

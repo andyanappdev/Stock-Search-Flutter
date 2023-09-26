@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:us_stock/data/data_source/local/corporation_list_entity.dart';
-import 'package:us_stock/data/data_source/local/favorite_list_entity.dart';
+import 'package:us_stock/data/data_source/local/company_entity.dart';
+import 'package:us_stock/data/data_source/local/favorite_company_list_entity.dart';
 import 'core/router/router.dart';
 import 'core/color_schemes.dart';
 
@@ -13,8 +13,8 @@ Future<void> main() async {
   // Initializes Hive with a valid directory in your app files.
   await Hive.initFlutter();
   // Register Adapter
-  Hive.registerAdapter(CorporationListEntityAdapter());
-  Hive.registerAdapter(FavoriteListEntityAdapter());
+  Hive.registerAdapter(CompanyEntityAdapter());
+  Hive.registerAdapter(FavoriteCompanyListEntityAdapter());
   runApp(const MyApp());
 }
 
