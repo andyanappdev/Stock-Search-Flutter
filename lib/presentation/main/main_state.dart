@@ -10,6 +10,7 @@ part 'main_state.g.dart';
 class MainState with _$MainState {
   const factory MainState({
     @Default([]) List<Company> companyList,
+    @Default([]) List<Company> favoriteList,
     @Default(false) bool favorite,
     @Default(false) bool isLoading,
     @Default(false) bool isRefreshing,
