@@ -44,6 +44,16 @@ class StockRepositoryImpl implements StockRepository {
   }
 
   @override
+  Future<List<Company>> fetchFavoriteCompanyList() async {
+    final List<CompanyEntity> favoriteList = await _dao.readFavoriteCompanyList();
+    if (favoriteList.isNotEmpty) {
+      return favoriteList.map((e) => e.toCompanyList()).toList();
+    } else {
+      return [];
+    }
+  }
+
+  @override
   Future<CompanyInfo> fetchCompanyInfo(String symbol) async {
     // TODO: implement fetchCorporationInfo
     throw UnimplementedError();
