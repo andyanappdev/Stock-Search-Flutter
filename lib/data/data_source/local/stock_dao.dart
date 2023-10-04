@@ -23,12 +23,13 @@ class StockDao {
 
   /// stock.db Update
   // 해당 object의 키를 전달 하여 업데이트 하는 방법을 테스트해보자
-  Future<void> updateCompanyEntity(int index) async {
+  Future<CompanyEntity> updateCompanyEntity(int index) async {
     final box = await Hive.openBox<CompanyEntity>('stock.db');
     final List<CompanyEntity> companyList = box.values.toList();
     final updateObject = companyList[index];
     updateObject.favorite = !updateObject.favorite;
     await updateObject.save();
+    return updateObject;
   }
 
   /// stock.db Delete (삭제)
@@ -38,13 +39,13 @@ class StockDao {
   }
 
   /// favorite.db Create or Delete
-  Future<void> insertFavoriteList(CompanyEntity favoriteCompany) async {
+  Future<void> handleFavoriteList(CompanyEntity favoriteCompany) async {
     final favoriteBox =
         await Hive.openBox<CompanyEntity>('favorite.db');
     if (favoriteCompany.favorite) {
       await favoriteBox.add(favoriteCompany);
     } else {
-      await favoriteBox.delete(favoriteCompany.key);
+      await favoriteBox.delete(favoriteCompany);
     }
   }
 
