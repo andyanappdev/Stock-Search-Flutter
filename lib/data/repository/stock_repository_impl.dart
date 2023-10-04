@@ -43,7 +43,8 @@ class StockRepositoryImpl implements StockRepository {
     }
   }
 
-  Future<void> updateCompayList(int index) async {
+  @override
+  Future<void> updateCompay(int index) async {
     final updateObject = await _dao.updateCompanyEntity(index);
     await _dao.handleFavoriteList(updateObject);
   }
