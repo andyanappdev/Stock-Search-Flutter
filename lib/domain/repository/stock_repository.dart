@@ -6,7 +6,7 @@ abstract interface class StockRepository {
 
   Future<List<Company>> fetchFavoriteCompanyList();
 
-  Future<void> updateCompay(int index);
+  Future<void> updateCompay(Company selectedObject);
 
   Future<CompanyInfo> fetchCompanyInfo(String symbol);
 }

@@ -1,5 +1,6 @@
 import 'package:us_stock/data/csv/corporation_list_parser.dart';
 import 'package:us_stock/data/data_source/local/company_entity.dart';
+import 'package:us_stock/data/data_source/local/favorite_entity.dart';
 import 'package:us_stock/data/data_source/local/stock_dao.dart';
 import 'package:us_stock/data/data_source/remote/stock_api.dart';
 import 'package:us_stock/data/mapper/company_mapper.dart';
@@ -44,16 +45,16 @@ class StockRepositoryImpl implements StockRepository {
   }
 
   @override
-  Future<void> updateCompay(int index) async {
-    final updateObject = await _dao.updateCompanyEntity(index);
-    await _dao.handleFavoriteList(updateObject);
+  Future<void> updateCompay(Company selectedObject) async {
+    final updateObject = await _dao.updateCompanyEntity(selectedObject.toCompanyEntity());
+    await _dao.handleFavoriteCompanyList(updateObject);
   }
 
   @override
   Future<List<Company>> fetchFavoriteCompanyList() async {
-    final List<CompanyEntity> favoriteList = await _dao.readFavoriteCompanyList();
-    if (favoriteList.isNotEmpty) {
-      return favoriteList.map((e) => e.toCompanyList()).toList();
+    final favoriteEntity = await _dao.readFavoriteEntity();
+    if (favoriteEntity.favoriteCompanyList.isNotEmpty) {
+      return favoriteEntity.favoriteCompanyList.map((e) => e.toCompanyList()).toList();
     } else {
       return [];
     }
