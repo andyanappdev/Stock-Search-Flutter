@@ -1,5 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:us_stock/data/data_source/local/company_entity.dart';
+import 'package:us_stock/data/data_source/local/favorite_entity.dart';
 
 /// Local DB (Hive)에 접근하는 DAO
 class StockDao {
@@ -22,11 +23,10 @@ class StockDao {
   }
 
   /// stock.db Update
-  // 해당 object의 키를 전달 하여 업데이트 하는 방법을 테스트해보자
-  Future<CompanyEntity> updateCompanyEntity(int index) async {
+  Future<CompanyEntity> updateCompanyEntity(CompanyEntity selectedObject) async {
     final box = await Hive.openBox<CompanyEntity>('stock.db');
     final List<CompanyEntity> companyList = box.values.toList();
-    final updateObject = companyList[index];
+    final updateObject = companyList.singleWhere((e) => e.symbol == selectedObject.symbol);
     updateObject.favorite = !updateObject.favorite;
     await updateObject.save();
     return updateObject;
@@ -39,19 +39,34 @@ class StockDao {
   }
 
   /// favorite.db Create or Delete
-  Future<void> handleFavoriteList(CompanyEntity favoriteCompany) async {
+  Future<void> handleFavoriteCompanyList(CompanyEntity updateObject) async {
     final favoriteBox =
-        await Hive.openBox<CompanyEntity>('favorite.db');
-    if (favoriteCompany.favorite) {
-      await favoriteBox.add(favoriteCompany);
+        await Hive.openBox<FavoriteEntity>('favorite.db');
+    final favoriteEntity = favoriteBox.get(0);
+    if (favoriteEntity == null) {
+      final newFavoriteEntity = FavoriteEntity();
+      await favoriteBox.put(0, newFavoriteEntity);
+    }
+    final favoriteCompanyList = favoriteEntity!.favoriteCompanyList;
+    if (updateObject.favorite) {
+      favoriteCompanyList.add(updateObject);
+      favoriteEntity.updateTime = DateTime.now();
+      await favoriteEntity.save();
     } else {
-      await favoriteBox.delete(favoriteCompany);
+      favoriteCompanyList.removeWhere((e) => e.symbol == updateObject.symbol);
+      favoriteEntity.updateTime = DateTime.now();
+      await favoriteEntity.save();
     }
   }
 
   /// favorite.db Read
-  Future<List<CompanyEntity>> readFavoriteCompanyList() async {
-    final favoriteBox = await Hive.openBox<CompanyEntity>('favorite.db');
-    return favoriteBox.values.toList();
+  Future<FavoriteEntity> readFavoriteEntity() async {
+    final favoriteBox = await Hive.openBox<FavoriteEntity>('favorite.db');
+    final favoriteEntity = favoriteBox.get(0);
+    if (favoriteEntity == null) {
+      final newFavoriteEntity = FavoriteEntity();
+      await favoriteBox.put(0, newFavoriteEntity);
+    }
+    return favoriteEntity!;
   }
 }
