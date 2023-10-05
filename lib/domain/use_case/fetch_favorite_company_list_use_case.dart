@@ -12,7 +12,7 @@ class FetchFavoriteCompanyListUseCase {
       final result = await _repository.fetchFavoriteCompanyList();
       return Result.success(result);
     } catch (e) {
-      return Result.error('Error OperateFavoriteCompanyListUseCase: ${e.toString()}');
+      return Result.error('Error FetchFavoriteCompanyListUseCase: ${e.toString()}');
     }
   }
 }
