@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:us_stock/presentation/main/components/company_list_view_builder.dart';
+import 'package:us_stock/presentation/main/components/favorite_list_view_builder.dart';
+import 'package:us_stock/presentation/main/main_event.dart';
 import 'package:us_stock/presentation/main/main_state.dart';
 import 'package:us_stock/presentation/main/main_view_model.dart';
-import 'package:intl/intl.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -35,6 +39,7 @@ class _MainScreenState extends State<MainScreen> {
         body: Column(
           children: [
             _buildSearchTextField(context, viewModel),
+            _buildMakeNewFavoriteList(state, viewModel),
             _buildListView(state, viewModel),
           ],
         ),
@@ -75,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _buildSearchTextField(BuildContext context, viewModel) {
+  Widget _buildSearchTextField(BuildContext context, MainViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: SizedBox(
@@ -86,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
           cursorColor: Theme.of(context).colorScheme.onBackground,
           style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
           onChanged: (query) {
-            // TODO: 쿼리 변경시 코드 구현
+            viewModel.onEvent(MainEvent.searchQueryChange(query));
           },
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
@@ -109,7 +114,13 @@ class _MainScreenState extends State<MainScreen> {
             suffixIcon: IconButton(
               icon: const Icon(Icons.clear_rounded),
               onPressed: () {
-                _controller.clear();
+                // setState 말고 더 있어 보이는 방법은?
+                // MainEvent에 fetchFavoriteList을 정의해서 처리 할수 있으나 작성해야할 코드가 많아져서 효율성 검토 필요
+                setState(() {
+                  _controller.clear();
+                });
+
+                // viewModel.
               },
             ),
           ),
@@ -118,46 +129,64 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget _buildListView(MainState state, viewModel) {
+  Widget _buildMakeNewFavoriteList(MainState state, MainViewModel viewModel) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+      child: GestureDetector(
+        child: const Row(
+          children: [
+            Text(
+              'My Favorite List ',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                color: Colors.blueAccent,
+              ),
+            ),
+            Icon(
+              Icons.list,
+              color: Colors.blueAccent,
+            ),
+          ],
+        ),
+        onTap: () {
+          showCupertinoModalPopup<void>(
+            context: context,
+            builder: (BuildContext context) => CupertinoAlertDialog(
+              title: const Text('Coming in the Future'),
+              content: const Text('Create and manage new lists'),
+              actions: <CupertinoDialogAction>[
+                CupertinoDialogAction(
+                  /// This parameter indicates this action is the default,
+                  /// and turns the action's text to bold text.
+                  isDefaultAction: true,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildListView(MainState state, MainViewModel viewModel) {
     return Expanded(
       child: RefreshIndicator(
         onRefresh: () async {
-          // TODO:
+          viewModel.onEvent(const MainEvent.refresh());
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: ListView.builder(
-            itemCount: state.companyList.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  ListTile(
-                    leading: Text(
-                      state.companyList[index].symbol,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    title: Text(
-                      state.companyList[index].name,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.outline,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    onTap: () {
-                      // TODO:
-                    },
-                  ),
-                  Divider(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
-                ],
-              );
-            },
-          ),
+          child: _controller.text.isEmpty
+              ? FavoriteListViewBuilder(
+                  controller: _controller, viewModel: viewModel)
+              : CompanyListViewBuilder(
+                  controller: _controller, viewModel: viewModel),
         ),
       ),
     );
