@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:us_stock/data/data_source/local/company_entity.dart';
+import 'package:us_stock/data/data_source/local/favorite_entity.dart';
 import 'core/router/router.dart';
 import 'core/color_schemes.dart';
 
@@ -13,6 +14,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   // Register Adapter
   Hive.registerAdapter(CompanyEntityAdapter());
+  Hive.registerAdapter(FavoriteEntityAdapter());
   runApp(const MyApp());
 }
 
