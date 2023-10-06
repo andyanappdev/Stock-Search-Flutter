@@ -39,7 +39,7 @@ class FavoriteListViewBuilder extends StatelessWidget {
               // The offset threshold the item has to be dragged in order to be considered dismissed.
               dismissThresholds: const {DismissDirection.endToStart: 0.5} ,
               onDismissed: (direction) async {
-                  viewModel.onEvent(FavoriteChange(selectedObject,controller.text));
+                  await viewModel.onEvent(FavoriteChange(selectedObject,controller.text));
               },
               confirmDismiss: (direction) async {
                 return await _confirmDismiss(context, selectedObject.name);

@@ -27,7 +27,7 @@ class MainViewModel with ChangeNotifier {
     _fetchFavoriteCompanyList();
   }
 
-  void onEvent(MainEvent event) {
+  Future<void> onEvent(MainEvent event) async {
     switch (event) {
       case Refresh():
         // remote에서 데이터 다시 가져오기
@@ -40,8 +40,8 @@ class MainViewModel with ChangeNotifier {
           _fetchCompanyList(query: query);
         });
       case FavoriteChange():
-        _updateFavorite(event.selectedObject);
-        _fetchCompanyList(fetchFromRemote: false, query: event.query);
+        await _updateFavorite(event.selectedObject);
+        await _fetchCompanyList(fetchFromRemote: false, query: event.query);
     }
   }
 
@@ -83,7 +83,8 @@ class MainViewModel with ChangeNotifier {
 
   Future<void> _updateFavorite(Company selectedObject) async {
     await _updateFavoriteUseCase.execute(selectedObject);
-    _fetchFavoriteCompanyList();
+    notifyListeners();
+    await _fetchFavoriteCompanyList();
     notifyListeners();
   }
 }
