@@ -16,7 +16,7 @@ class StockApi {
   }
 
   /// Company Overview API call
-  Future<http.Response> fetchCorporationInfo({required String symbol}) async {
+  Future<http.Response> fetchCompanyInfo({required String symbol}) async {
     return await _client.get(Uri.parse(
         '$baseUrl/query?function=OVERVIEW&symbol=$symbol&apiKey=$apiKey'));
   }

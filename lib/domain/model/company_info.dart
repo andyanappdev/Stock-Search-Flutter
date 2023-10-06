@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part 'corporation_info.freezed.dart';
+part 'company_info.freezed.dart';
 
-part 'corporation_info.g.dart';
+part 'company_info.g.dart';
 
 @freezed
-class CorporationInfo with _$CorporationInfo {
-  const factory CorporationInfo({
+class CompanyInfo with _$CompanyInfo {
+  const factory CompanyInfo({
     required String symbol,
     required String assetType,
     required String name,
@@ -54,8 +54,8 @@ class CorporationInfo with _$CorporationInfo {
     required String sharesOutstanding,
     required DateTime dividendDate,
     required DateTime exDividendDate,
-  }) = _CorporationInfo;
+  }) = _CompanyInfo;
 
-  factory CorporationInfo.fromJson(Map<String, Object?> json) =>
-      _$CorporationInfoFromJson(json);
+  factory CompanyInfo.fromJson(Map<String, Object?> json) =>
+      _$CompanyInfoFromJson(json);
 }

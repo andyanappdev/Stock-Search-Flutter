@@ -1,10 +1,10 @@
 import 'package:csv/csv.dart';
 import 'package:us_stock/data/csv/csv_parser_interface.dart';
-import 'package:us_stock/domain/model/corporation_list.dart';
+import 'package:us_stock/domain/model/company.dart';
 
-class CorporationListParser implements CsvParser<CorporationList> {
+class CompanyListParser implements CsvParser<Company> {
   @override
-  Future<List<CorporationList>> parse(String csvString) async {
+  Future<List<Company>> parse(String csvString) async {
     // CSV to list
     List<List<dynamic>> csvValues =
         const CsvToListConverter().convert(csvString);
@@ -18,7 +18,7 @@ class CorporationListParser implements CsvParser<CorporationList> {
           final assetType = e[3] ?? '';
           final ipoDate = e[4] ?? '';
           final status = e[6] ?? '';
-          return CorporationList(
+          return Company(
             symbol: symbol,
             name: name,
             exchange: exchange,
