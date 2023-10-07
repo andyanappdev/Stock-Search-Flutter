@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:us_stock/domain/model/company.dart';
 import 'package:us_stock/presentation/main/main_event.dart';
@@ -22,6 +23,7 @@ class CompanyListViewBuilder extends StatelessWidget {
     return ListView.builder(
       itemCount: state.companyList.length,
       itemBuilder: (context, index) {
+        Company selectedObject = state.companyList[index];
         return Column(
           children: [
             ListTile(
@@ -48,12 +50,11 @@ class CompanyListViewBuilder extends StatelessWidget {
                   color: Colors.blueAccent,
                 ),
                 onTap: () {
-                  Company selectedObject = state.companyList[index];
                   viewModel.onEvent(FavoriteChange(selectedObject,controller.text));
                 },
               ),
               onTap: () {
-                // TODO:
+                context.push('/detail', extra: selectedObject);
               },
             ),
             Divider(

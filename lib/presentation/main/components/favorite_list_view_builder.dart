@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:us_stock/domain/model/company.dart';
 import 'package:us_stock/presentation/main/main_event.dart';
@@ -66,7 +67,7 @@ class FavoriteListViewBuilder extends StatelessWidget {
                     // state.favoriteList[index].
                   ),
                   onTap: () {
-                    // TODO:
+                    context.push('/detail', extra: selectedObject);
                   },
                 ),
               ),
