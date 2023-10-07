@@ -11,7 +11,7 @@ class DetailState with _$DetailState {
   const factory DetailState({
     CompanyInfo? companyInfo,
     @Default(false) bool isLoading,
-
+    String? errorMessage,
   }) = _DetailState;
 
   factory DetailState.fromJson(Map<String, Object?> json) => _$DetailStateFromJson(json);
