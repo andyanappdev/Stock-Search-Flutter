@@ -55,13 +55,10 @@ class MainViewModel with ChangeNotifier {
     final result = await _companyListUseCase.execute(fetchFromRemote, query);
     switch (result) {
       case Success(:final data):
-        _state = state.copyWith(companyList: data);
+        _state = state.copyWith(companyList: data, isLoading: false);
       case Error(:final message):
         log('Error MainViewModel: $message');
     }
-
-    // 3. isLoading state 변경
-    _state = state.copyWith(isLoading: false);
     notifyListeners();
   }
 
@@ -72,12 +69,10 @@ class MainViewModel with ChangeNotifier {
     final result = await _favoriteCompanyListUseCase.execute();
     switch (result) {
       case Success(:final data):
-        _state = state.copyWith(favoriteList: data);
+        _state = state.copyWith(favoriteList: data, isLoading: false);
       case Error(:final message):
         log('Error MainViewModel: $message');
     }
-
-    _state = state.copyWith(isLoading: false);
     notifyListeners();
   }
 
