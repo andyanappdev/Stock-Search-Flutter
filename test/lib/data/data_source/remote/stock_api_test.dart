@@ -1,6 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:us_stock/data/csv/corporation_list_parser.dart';
+import 'package:us_stock/data/csv/company_list_parser.dart';
 import 'package:us_stock/data/data_source/remote/stock_api.dart';
 
 void main() {
