@@ -1,10 +1,106 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:us_stock/presentation/detail_screen/detail_state.dart';
+import 'package:us_stock/presentation/detail_screen/dettail_view_model.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final viewModel = context.watch<DetailViewModel>();
+    final state = viewModel.state;
+    return Scaffold(
+      appBar: _buildAppBar(context, viewModel),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            if (state.errorMessage != null)
+              Center(child: Text(state.errorMessage!)),
+            if (state.isLoading)
+              const Center(child: CupertinoActivityIndicator()),
+            if (state.isLoading == false && state.errorMessage == null)
+              _buildBody(context, state),
+          ],
+        ),
+      ),
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context, DetailViewModel viewModel) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      flexibleSpace: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    viewModel.selectedObject.symbol,
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+                  ),
+                  const SizedBox(width: 12.0),
+                  Text(
+                    viewModel.selectedObject.name,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.share),
+                    iconSize: 22.0,
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.cancel_outlined, color: Colors.blue),
+                    iconSize: 22.0,
+                    onPressed: () {
+                      context.pop();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      elevation: 0.0,
+    );
+  }
+
+  Widget _buildBody(BuildContext context, DetailState state) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  '${state.companyInfo!.exchange} - ${state.companyInfo!.currency}'),
+            ],
+          ),
+          const Divider(),
+
+        ],
+      ),
+    );
   }
 }
