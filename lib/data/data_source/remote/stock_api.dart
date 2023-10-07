@@ -20,4 +20,9 @@ class StockApi {
     return await _client.get(Uri.parse(
         '$baseUrl/query?function=OVERVIEW&symbol=$symbol&apikey=$apiKey'));
   }
+
+  /// Intraday API call
+  Future<http.Response> fetchCompanyIntradayInfo({required String symbol}) async {
+    return await _client.get(Uri.parse('$baseUrl/query?function=TIME_SERIES_INTRADAY&symbol=$symbol&interval=15min&extended_hours=false&datatype=csv&apikey=$apiKey'));
+  }
 }
