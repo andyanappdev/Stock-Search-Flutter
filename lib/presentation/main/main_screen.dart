@@ -134,19 +134,31 @@ class _MainScreenState extends State<MainScreen> {
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
       child: GestureDetector(
-        child: const Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'My Favorite List ',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w800,
-                color: Colors.blueAccent,
-              ),
+            const Row(
+              children: [
+                Text(
+                  'My Favorite List ',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+                Icon(
+                  Icons.list,
+                  color: Colors.blueAccent,
+                ),
+              ],
             ),
-            Icon(
-              Icons.list,
-              color: Colors.blueAccent,
+            Text('Last update : Test',
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).colorScheme.outline,
+              ),
             ),
           ],
         ),
