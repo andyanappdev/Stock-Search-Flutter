@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:us_stock/data/csv/corporation_list_parser.dart';
 import 'package:us_stock/data/data_source/local/company_entity.dart';
-import 'package:us_stock/data/data_source/local/favorite_entity.dart';
 import 'package:us_stock/data/data_source/local/stock_dao.dart';
+import 'package:us_stock/data/data_source/remote/company_info_dto.dart';
 import 'package:us_stock/data/data_source/remote/stock_api.dart';
+import 'package:us_stock/data/mapper/company_info_mapper.dart';
 import 'package:us_stock/data/mapper/company_mapper.dart';
-import 'package:us_stock/domain/model/company_info.dart';
 import 'package:us_stock/domain/model/company.dart';
+import 'package:us_stock/domain/model/company_info.dart';
 import 'package:us_stock/domain/repository/stock_repository.dart';
 
 class StockRepositoryImpl implements StockRepository {
@@ -62,7 +65,12 @@ class StockRepositoryImpl implements StockRepository {
 
   @override
   Future<CompanyInfo> fetchCompanyInfo(String symbol) async {
-    // TODO: implement fetchCorporationInfo
-    throw UnimplementedError();
+    try {
+      final response = await _api.fetchCompanyInfo(symbol: symbol);
+      final companyInfoDto = CompanyInfoDto.fromJson(jsonDecode(response.body));
+      return companyInfoDto.toCompanyInfo();
+    } catch (e) {
+      throw Exception('Error StockRepositoryImpl fetchCompanyInfo: ${e.toString()}');
+    }
   }
 }
