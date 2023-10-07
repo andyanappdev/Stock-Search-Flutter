@@ -13,7 +13,7 @@ class CompanyIntradayInfo with _$CompanyIntradayInfo {
     required double high,
     required double low,
     required double close,
-    required double volume,
+    required int volume,
   }) = _CompanyIntradayInfo;
 
   factory CompanyIntradayInfo.fromJson(Map<String, Object?> json) => _$CompanyIntradayInfoFromJson(json);
