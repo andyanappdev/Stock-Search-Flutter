@@ -11,6 +11,18 @@ class CompanyIntradayInfoParser implements CsvParser<CompanyIntradayInfo> {
     List<List<dynamic>> csvValues = const CsvToListConverter().convert(csvString);
     // 첫줄 label 삭제
     csvValues.removeAt(0);
+
+    // csvValues를 시간 순서대로 정렬
+    csvValues.sort((a,b) {
+      final timestampA = DateTime.tryParse(a[0] ?? '');
+      final timestampB = DateTime.tryParse(b[0] ?? '');
+
+      if (timestampA == null || timestampB == null) {
+        return 0;
+      }
+      return timestampA.compareTo(timestampB);
+    });
+
     return csvValues.map((e) {
       final timestamp = e[0] ?? '';
       final open = e[1] ?? 0.0;
