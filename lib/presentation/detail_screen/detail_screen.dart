@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:us_stock/presentation/detail_screen/components/company_chart.dart';
 import 'package:us_stock/presentation/detail_screen/detail_state.dart';
 import 'package:us_stock/presentation/detail_screen/dettail_view_model.dart';
 
@@ -17,12 +18,14 @@ class DetailScreen extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            if (state.errorMessage != null)
-              Center(child: Text(state.errorMessage!)),
             if (state.isLoading)
-              const Center(child: CupertinoActivityIndicator()),
-            if (state.isLoading == false && state.errorMessage == null)
-              _buildBody(context, state),
+              const Center(
+                  child: CupertinoActivityIndicator(
+                radius: 20.0,
+                color: CupertinoColors.link,
+              )),
+            if (state.isLoading == false && state.companyInfo != null && state.companyIntradayInfo.isNotEmpty)
+              _buildBody(context, viewModel, state),
           ],
         ),
       ),
@@ -50,12 +53,16 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12.0),
-                  Text(
-                    viewModel.selectedObject.name,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).colorScheme.outline,
+                  SizedBox(
+                    width: 190,
+                    child: Text(
+                      viewModel.selectedObject.name,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Theme.of(context).colorScheme.outline,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                 ],
@@ -84,7 +91,7 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(BuildContext context, DetailState state) {
+  Widget _buildBody(BuildContext context, DetailViewModel viewModel, DetailState state) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -98,9 +105,14 @@ class DetailScreen extends StatelessWidget {
             ],
           ),
           const Divider(),
-
+          if (state.companyIntradayInfo.isNotEmpty) _buildCompanyChart(context, viewModel),
         ],
       ),
     );
   }
+
+  Widget _buildCompanyChart(BuildContext context, DetailViewModel viewModel) {
+    return CompanyChart(viewModel: viewModel);
+  }
+
 }

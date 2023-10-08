@@ -33,10 +33,10 @@ class DetailViewModel with ChangeNotifier {
     switch (result) {
       case Success(:final data):
         _state = state.copyWith(
-            companyInfo: data, isLoading: false, errorMessage: null);
+            companyInfo: data, isLoading: false);
       case Error(:final message):
         _state = state.copyWith(
-            companyInfo: null, isLoading: false, errorMessage: message);
+            companyInfo: null, isLoading: false);
         log('Error DetailViewModel: $message');
     }
     notifyListeners();
@@ -45,10 +45,12 @@ class DetailViewModel with ChangeNotifier {
     switch (intradayInfo) {
       case Success(:final data):
         _state = _state.copyWith(
-            companyIntradayInfo: data, isLoading: false, errorMessage: null);
+            companyIntradayInfo: data, isLoading: false);
+        log('${data.toList().length}');
       case Error(:final message):
         _state = _state.copyWith(
-            companyIntradayInfo: [], isLoading: false, errorMessage: message);
+            companyIntradayInfo: [], isLoading: false);
+        log('Error DetailViewModel: $message');
     }
     notifyListeners();
   }

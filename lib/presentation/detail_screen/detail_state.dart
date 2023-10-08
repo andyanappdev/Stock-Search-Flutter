@@ -12,7 +12,6 @@ class DetailState with _$DetailState {
   const factory DetailState({
     CompanyInfo? companyInfo,
     @Default(false) bool isLoading,
-    String? errorMessage,
     @Default([]) List<CompanyIntradayInfo> companyIntradayInfo,
   }) = _DetailState;
 

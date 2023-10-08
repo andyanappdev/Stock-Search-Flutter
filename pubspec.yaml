@@ -47,6 +47,7 @@ dependencies:
   hive_flutter: ^1.1.0
   csv: ^5.0.2
   intl: ^0.18.1
+  syncfusion_flutter_charts: ^23.1.39
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - .env
+    - assets/data/intraday_5min_AAPL.csv
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
