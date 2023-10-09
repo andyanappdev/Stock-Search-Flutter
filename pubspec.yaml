@@ -80,6 +80,7 @@ flutter:
   assets:
     - .env
     - assets/data/intraday_5min_AAPL.csv
+    - assets/data/listing_status.csv
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
