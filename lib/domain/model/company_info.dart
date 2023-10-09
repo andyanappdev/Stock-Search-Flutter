@@ -27,10 +27,10 @@ class CompanyInfo with _$CompanyInfo {
     // required String pegRatio,  // 주가이익증가비율
     // required String bookValue,  // 자기자본총액
     // required String dividendPerShare,  // 주당 배당금
-    // required String dividendYield,
+    required String dividendYield,
     required String eps, // 주당순이익
     // required String revenuePerShareTtm,
-    // required String profitMargin,
+    required String profitMargin,
     // required String operatingMarginTtm,
     // required String returnOnAssetsTtm,
     // required String returnOnEquityTtm,
@@ -43,10 +43,10 @@ class CompanyInfo with _$CompanyInfo {
     // required String trailingPe,
     // required String forwardPe,
     // required String priceToSalesRatioTtm,
-    // required String priceToBookRatio,
+    required String priceToBookRatio,
     // required String evToRevenue,
     // required String evToEbitda,
-    // required String beta,
+    required String beta,
     required String weekHigh,
     required String weekLow,
     // required String the50DayMovingAverage,

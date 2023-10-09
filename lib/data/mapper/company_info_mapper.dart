@@ -17,6 +17,10 @@ extension ToCompanyInfo on CompanyInfoDto {
       marketCapitalization: marketCapitalization ?? '',
       per: per ?? '',
       eps: eps ?? '',
+      profitMargin: profitMargin ?? '',
+      dividendYield: dividendYield ?? '',
+      priceToBookRatio: priceToBookRatio ?? '',
+      beta: beta ?? '',
       weekHigh: weekHigh ?? '',
       weekLow: weekLow ?? '',
     );

@@ -21,6 +21,10 @@ class CompanyInfoDto with _$CompanyInfoDto {
     @JsonKey(name: 'MarketCapitalization') String? marketCapitalization,
     @JsonKey(name: 'PERatio') String? per,
     @JsonKey(name: 'EPS') String? eps,
+    @JsonKey(name: 'DividendYield') String? dividendYield,
+    @JsonKey(name: 'ProfitMargin') String? profitMargin,
+    @JsonKey(name: 'PriceToBookRatio') String? priceToBookRatio,
+    @JsonKey(name: 'Beta') String? beta,
     @JsonKey(name: '52WeekHigh') String? weekHigh,
     @JsonKey(name: '52WeekLow') String? weekLow,
   }) = _CompanyInfoDto;
