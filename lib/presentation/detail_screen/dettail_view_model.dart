@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:us_stock/core/result.dart';
 import 'package:us_stock/domain/model/company.dart';
 import 'package:us_stock/domain/use_case/fetch_company_info_use_case.dart';
@@ -22,10 +23,10 @@ class DetailViewModel with ChangeNotifier {
 
   DetailViewModel(this._companyInfoUseCase, this._companyIntradayInfoUseCase, this._selectedObject, String symbol,
       ) {
-    fetchCompanyInfo(symbol);
+    _fetchCompanyInfo(symbol);
   }
 
-  Future<void> fetchCompanyInfo(String symbol) async {
+  Future<void> _fetchCompanyInfo(String symbol) async {
     _state = state.copyWith(isLoading: true);
     notifyListeners();
 
@@ -53,5 +54,26 @@ class DetailViewModel with ChangeNotifier {
         log('Error DetailViewModel: $message');
     }
     notifyListeners();
+  }
+
+  double calculateValue(String which) {
+    List<double> values = _state.companyIntradayInfo.map((e) => e.high).toList();
+    double result;
+
+    if (which == 'max') {
+      result = values.isNotEmpty ? values.reduce((a, b) => a > b ? a : b) : 0.0;
+    } else if (which == 'min') {
+      result = values.isNotEmpty ? values.reduce((a, b) => a < b ? a : b) : 0.0;
+    } else {
+      // 예외 처리: 'max' 또는 'min' 외의 값이 파라미터로 전달된 경우
+      throw ArgumentError('Invalid parameter: $which');
+    }
+    return result;
+  }
+
+  String formatMarketCap(String marketCap) {
+    final toNum = num.tryParse(marketCap);
+    final formatter = NumberFormat.compact(locale: 'ko_KR');
+    return formatter.format(toNum);
   }
 }
