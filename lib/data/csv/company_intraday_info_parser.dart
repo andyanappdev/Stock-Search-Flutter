@@ -23,6 +23,22 @@ class CompanyIntradayInfoParser implements CsvParser<CompanyIntradayInfo> {
       return timestampA.compareTo(timestampB);
     });
 
+    // 변경된 날짜의 인덱스를 찾기
+    int changeDateIndex = -1;
+    final currentDate = DateTime.tryParse(csvValues[0][0] ?? '');
+    for (int i = 1; i < csvValues.length; i++) {
+      final nextDate = DateTime.tryParse(csvValues[i][0] ?? '');
+      if (nextDate != null && nextDate.day != currentDate!.day) {
+        changeDateIndex = i;
+        break;
+      }
+    }
+
+    if (changeDateIndex != -1) {
+      // 변경된 날짜 이후의 데이터만 파싱
+      csvValues = csvValues.sublist(changeDateIndex);
+    }
+
     return csvValues.map((e) {
       final timestamp = e[0] ?? '';
       final open = e[1] ?? 0.0;
