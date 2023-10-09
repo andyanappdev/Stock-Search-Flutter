@@ -49,9 +49,11 @@ class StockDao {
     }
     final favoriteCompanyList = favoriteEntity!.favoriteCompanyList;
     if (updateObject.favorite) {
-      favoriteCompanyList.add(updateObject);
-      favoriteEntity.updateTime = DateTime.now();
-      await favoriteEntity.save();
+      if (!favoriteCompanyList.any((e) => e.symbol == updateObject.symbol)) {
+        favoriteCompanyList.add(updateObject);
+        favoriteEntity.updateTime = DateTime.now();
+        await favoriteEntity.save();
+      }
     } else {
       favoriteCompanyList.removeWhere((e) => e.symbol == updateObject.symbol);
       favoriteEntity.updateTime = DateTime.now();
