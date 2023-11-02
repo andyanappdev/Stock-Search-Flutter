@@ -54,6 +54,12 @@ class MockStockRepositoryImpl implements StockRepository {
   }
 
   @override
+  Future<void> combineList(List<Company> updatedCompanyList) async {
+    await _dao.clearCompanyList();
+    await _dao.insertCompanyList(updatedCompanyList.map((e) => e.toCompanyEntity()).toList());
+  }
+
+  @override
   Future<void> updateCompay(Company selectedObject) async {
     final updateObject = selectedObject.toCompanyEntity();
     updateObject.favorite = !selectedObject.favorite;
