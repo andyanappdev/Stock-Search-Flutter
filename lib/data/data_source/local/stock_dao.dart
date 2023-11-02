@@ -23,13 +23,12 @@ class StockDao {
   }
 
   /// stock.db Update
-  Future<CompanyEntity> updateCompanyEntity(CompanyEntity selectedObject) async {
+  Future<void> updateCompanyEntity(CompanyEntity updateObject) async {
     final box = await Hive.openBox<CompanyEntity>('stock.db');
     final List<CompanyEntity> companyList = box.values.toList();
-    final updateObject = companyList.singleWhere((e) => e.symbol == selectedObject.symbol);
-    updateObject.favorite = !updateObject.favorite;
-    await updateObject.save();
-    return updateObject;
+    final targetObject = companyList.singleWhere((e) => e.symbol == updateObject.symbol);
+    targetObject.favorite = updateObject.favorite;
+    await targetObject.save();
   }
 
   /// stock.db Delete (삭제)
@@ -40,8 +39,7 @@ class StockDao {
 
   /// favorite.db Create or Delete
   Future<void> handleFavoriteCompanyList(CompanyEntity updateObject) async {
-    final favoriteBox =
-        await Hive.openBox<FavoriteEntity>('favorite.db');
+    final favoriteBox = await Hive.openBox<FavoriteEntity>('favorite.db');
     final favoriteEntity = favoriteBox.get(0);
     if (favoriteEntity == null) {
       final newFavoriteEntity = FavoriteEntity();
