@@ -11,6 +11,7 @@ import 'package:us_stock/data/mapper/company_mapper.dart';
 import 'package:us_stock/domain/model/company.dart';
 import 'package:us_stock/domain/model/company_info.dart';
 import 'package:us_stock/domain/model/company_intraday_info.dart';
+import 'package:us_stock/domain/model/favorite_company_list.dart';
 import 'package:us_stock/domain/repository/stock_repository.dart';
 
 class StockRepositoryImpl implements StockRepository {
@@ -52,7 +53,15 @@ class StockRepositoryImpl implements StockRepository {
 
   @override
   Future<void> updateCompay(Company selectedObject) async {
-    final updateObject = await _dao.updateCompanyEntity(selectedObject.toCompanyEntity());
+    final updateObject = selectedObject.toCompanyEntity();
+    updateObject.favorite = !selectedObject.favorite;
+    await _dao.updateCompanyEntity(updateObject);
+  }
+
+  @override
+  Future<void> updatedFavoriteList(Company selectedObject) async {
+    final updateObject = selectedObject.toCompanyEntity();
+    updateObject.favorite = !selectedObject.favorite;
     await _dao.handleFavoriteCompanyList(updateObject);
   }
 
