@@ -8,17 +8,6 @@ class UpdateFavoriteUseCase {
 
   Future<void> execute(Company selectedObject) async {
       await _repository.updateCompay(selectedObject);
+      await _repository.updatedFavoriteList(selectedObject);
   }
-
-  // Future<Result<List<Company>>> execute(int index) async {
-  //   try {
-  //     await _repository.updateCompay(index);
-  //     final result = await _repository.fetchCompanyList(false, '');
-  //     return Result.success(result);
-  //   } catch (e) {
-  //     return Result.error('Error UpdateFavoriteUseCase: ${e.toString()}');
-  //   }
-  // }
-
-
 }
